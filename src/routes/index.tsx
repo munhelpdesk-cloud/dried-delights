@@ -26,17 +26,17 @@ export const Route = createFileRoute("/")({
 });
 
 const categories = [
-  { name: "Almonds", count: "12 varieties", position: "0% center" },
-  { name: "Cashews", count: "9 varieties", position: "33.33% center" },
-  { name: "Dates", count: "7 varieties", position: "66.66% center" },
-  { name: "Walnuts & Pistachios", count: "10 varieties", position: "100% center" },
+  { name: "Almonds", count: "12 varieties", crop: "left-0" },
+  { name: "Cashews", count: "9 varieties", crop: "-left-full" },
+  { name: "Dates", count: "7 varieties", crop: "-left-[200%]" },
+  { name: "Walnuts & Pistachios", count: "10 varieties", crop: "-left-[300%]" },
 ];
 
 const products = [
-  { name: "Royal Almonds", detail: "500g · California", price: "₹649", position: "0% 0%", badge: "Bestseller" },
-  { name: "Maldive Cashews", detail: "500g · W320", price: "₹799", position: "100% 0%", badge: "Handpicked" },
-  { name: "Medjool Dates", detail: "400g · Jumbo", price: "₹899", position: "0% 100%", badge: "New harvest" },
-  { name: "Saffron Pistachios", detail: "300g · Roasted", price: "₹1,299", position: "100% 100%", badge: "Limited" },
+  { name: "Royal Almonds", detail: "500g · California", price: "₹649", crop: "left-0 top-0", badge: "Bestseller" },
+  { name: "Maldive Cashews", detail: "500g · W320", price: "₹799", crop: "-left-full top-0", badge: "Handpicked" },
+  { name: "Medjool Dates", detail: "400g · Jumbo", price: "₹899", crop: "left-0 -top-full", badge: "New harvest" },
+  { name: "Saffron Pistachios", detail: "300g · Roasted", price: "₹1,299", crop: "-left-full -top-full", badge: "Limited" },
 ];
 
 function Storefront() {
@@ -132,7 +132,7 @@ function Storefront() {
               {products.map((product, index) => (
                 <article key={product.name} className={`overflow-hidden rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 ${index % 2 ? "mt-8" : ""}`}>
                   <div className="aspect-[4/3] overflow-hidden">
-                    <img src={bestsellerCollection} alt="" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" style={{ objectPosition: product.position }} />
+                    <img src={bestsellerCollection} alt="" className={`absolute h-[200%] w-[200%] max-w-none object-cover ${product.crop}`} />
                   </div>
                   <div className="p-4"><p className="text-[11px] uppercase text-accent">{product.badge}</p><h2 className="mt-1 font-display text-base">{product.name}</h2><p className="mt-1 text-sm text-primary-foreground/60">{product.price}</p></div>
                 </article>
@@ -149,7 +149,7 @@ function Storefront() {
             {categories.map((category) => (
               <a key={category.name} href="#shop" className="group block">
                 <div className="aspect-[4/5] overflow-hidden rounded-lg bg-muted">
-                  <img src={categoryCollection} alt={category.name} loading="lazy" width={1600} height={1200} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: category.position }} />
+                  <img src={categoryCollection} alt={category.name} loading="lazy" width={1600} height={1200} className={`absolute h-full w-[400%] max-w-none object-cover transition-transform duration-500 group-hover:scale-[1.02] ${category.crop}`} />
                 </div>
                 <h3 className="mt-4 font-display text-base sm:text-lg">{category.name}</h3>
                 <p className="text-sm text-muted-foreground">{category.count}</p>
@@ -166,7 +166,7 @@ function Storefront() {
             {products.map((product) => (
               <article className="group" key={product.name}>
                 <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
-                  <img src={bestsellerCollection} alt={product.name} loading="lazy" width={1600} height={1600} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: product.position }} />
+                  <img src={bestsellerCollection} alt={product.name} loading="lazy" width={1600} height={1600} className={`absolute h-[200%] w-[200%] max-w-none object-cover transition-transform duration-500 group-hover:scale-[2.04] ${product.crop}`} />
                   <span className="absolute left-3 top-3 rounded bg-background/90 px-2 py-1 text-[10px] font-semibold uppercase text-foreground">{product.badge}</span>
                 </div>
                 <div className="mt-4 flex items-start justify-between gap-2">
