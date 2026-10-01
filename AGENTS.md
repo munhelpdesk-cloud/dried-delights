@@ -1,12 +1,5 @@
-<!-- LOVABLE:BEGIN -->
-> [!IMPORTANT]
-> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
-> published git history — force pushing, or rebasing/amending/squashing commits
-> that are already pushed — as it rewrites history on Lovable's side and the
-> user will likely lose their project history.
->
-> Commits you push to the connected branch sync back to Lovable and show up in
-> the editor, so keep the branch in a working state.
-<!-- LOVABLE:END -->
+# Project Architecture
 
-- Keep the storefront UI-only with local React state; no commerce backend until explicitly requested.
+- Keep catalog, cart, checkout, inventory, and payment behavior UI-only with local data; only AI recommendations use server-side infrastructure.
+- Use the uploaded ASM Delights logo through a Lovable Assets pointer, because brand media should be served through the project asset flow.
+- Keep product facts in one shared catalog module so storefront, detail pages, cart, checkout, and AI recommendations stay consistent.

@@ -1,4 +1,4 @@
-# Dried Delights
+# NutriBloom Store
 
 1. dryfruit ecom store 
 
@@ -14,7 +14,7 @@ This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/fce2a309-c3db-41cf-ad5d-360cd5dcd0b3).
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/8be2388b-9763-4cdc-bee5-87cb33ce2d39).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
 - **Stay in sync**: every change made in Lovable is committed straight to this repository.

@@ -1,239 +1,96 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
-import { Check, ChevronRight, Menu, Search, ShoppingBag, User, X } from "lucide-react";
-
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, Check, ChevronRight, Gift, Heart, Leaf, Plus, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import logo from "@/assets/asm-delights-logo.png.asset.json";
+import heroImage from "@/assets/asm-hero-dry-fruits.jpg";
+import collectionImage from "@/assets/asm-product-collection.jpg";
+import { StoreHeader } from "@/components/store-header";
 import { Button } from "@/components/ui/button";
-import categoryCollection from "@/assets/category-collection.jpg";
-import bestsellerCollection from "@/assets/bestseller-collection.jpg";
-import festiveHamper from "@/assets/festive-hamper.jpg";
-import provenance from "@/assets/provenance.jpg";
+import { products } from "@/data/catalog";
+import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Premium Dry Fruits & Festive Hampers | Mundra Dry Fruits" },
-      {
-        name: "description",
-        content: "Shop hand-sorted almonds, cashews, dates, pistachios and premium dry-fruit hampers from Mundra Dry Fruits.",
-      },
-      { property: "og:title", content: "Mundra Dry Fruits — The Premium Pantry" },
-      { property: "og:description", content: "Hand-sorted dry fruits and beautifully packed festive hampers, delivered fresh across India." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
-  component: Storefront,
+  head: () => ({ meta: [
+    { title: "ASM Delights | Premium Dry Fruits, Nuts & Gift Boxes" },
+    { name: "description", content: "Shop premium almonds, cashews, pistachios, dates and curated gift boxes from ASM Delights." },
+    { property: "og:title", content: "ASM Delights | Premium Dry Fruits & Gifting" },
+    { property: "og:description", content: "Everyday nourishment and thoughtful gifting, handpicked for freshness." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary_large_image" },
+  ] }),
+  component: Index,
 });
 
 const categories = [
-  { name: "Almonds", count: "12 varieties", crop: "left-0" },
-  { name: "Cashews", count: "9 varieties", crop: "-left-full" },
-  { name: "Dates", count: "7 varieties", crop: "-left-[200%]" },
-  { name: "Walnuts & Pistachios", count: "10 varieties", crop: "-left-[300%]" },
+  { name: "Almonds", note: "Daily crunch", crop: "object-[20%_70%]" },
+  { name: "Cashews", note: "Creamy classics", crop: "object-[70%_80%]" },
+  { name: "Pistachios", note: "Roasted goodness", crop: "object-[23%_15%]" },
+  { name: "Dates", note: "Naturally sweet", crop: "object-[78%_12%]" },
 ];
 
-const products = [
-  { name: "Royal Almonds", detail: "500g · California", price: "₹649", crop: "left-0 top-0", badge: "Bestseller" },
-  { name: "Maldive Cashews", detail: "500g · W320", price: "₹799", crop: "-left-full top-0", badge: "Handpicked" },
-  { name: "Medjool Dates", detail: "400g · Jumbo", price: "₹899", crop: "left-0 -top-full", badge: "New harvest" },
-  { name: "Saffron Pistachios", detail: "300g · Roasted", price: "₹1,299", crop: "-left-full -top-full", badge: "Limited" },
-];
-
-function Storefront() {
-  const [cartCount, setCartCount] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [subscribed, setSubscribed] = useState(false);
-
-  function subscribe(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setSubscribed(true);
-  }
+function Index() {
+  const { addItem } = useCart();
 
   return (
-    <main className="min-h-screen overflow-hidden bg-background text-foreground">
-      <div className="overflow-hidden bg-primary text-primary-foreground">
-        <div className="flex w-max animate-pantry-marquee whitespace-nowrap py-2.5 text-[11px] uppercase">
-          {[0, 1].map((set) => (
-            <div className="flex" key={set} aria-hidden={set === 1}>
-              <span className="px-8">Free shipping over ₹999</span>
-              <span className="px-8 text-accent">Festive hampers now open</span>
-              <span className="px-8">Single-origin, hand-sorted daily</span>
-            </div>
-          ))}
-        </div>
-      </div>
+    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      <StoreHeader />
 
-      <header className="relative z-40 border-b border-border bg-background/95">
-        <div className="mx-auto max-w-[1440px] px-5 lg:px-10">
-          <div className="flex h-20 items-center justify-between">
-            <a href="#top" className="flex items-center gap-3" aria-label="Mundra Dry Fruits home">
-              <span className="grid size-10 place-items-center rounded-lg bg-primary font-display text-lg font-bold text-accent">M</span>
-              <span className="font-display text-lg font-bold lg:text-xl">Mundra <span className="text-destructive">Dry Fruits</span></span>
-            </a>
-            <nav className="hidden items-center gap-8 text-sm lg:flex" aria-label="Main navigation">
-              <a href="#shop" className="transition-colors hover:text-destructive">Shop</a>
-              <a href="#categories" className="transition-colors hover:text-destructive">Categories</a>
-              <a href="#gifting" className="transition-colors hover:text-destructive">Gifting</a>
-              <a href="#story" className="transition-colors hover:text-destructive">Our Story</a>
-            </nav>
-            <div className="flex items-center gap-1 sm:gap-2">
-              <Button variant="ghost" size="icon" aria-label="Search" onClick={() => setSearchOpen((value) => !value)}><Search /></Button>
-              <Button variant="ghost" size="icon" aria-label="Account" className="hidden sm:inline-flex"><User /></Button>
-              <Button variant="ghost" size="icon" aria-label={`Cart with ${cartCount} items`} className="relative">
-                <ShoppingBag />
-                {cartCount > 0 && <span className="absolute right-0 top-0 grid size-4 place-items-center rounded-full bg-destructive text-[9px] font-semibold text-destructive-foreground">{cartCount}</span>}
-              </Button>
-              <Button variant="ghost" size="icon" className="lg:hidden" aria-label={menuOpen ? "Close menu" : "Open menu"} onClick={() => setMenuOpen((value) => !value)}>
-                {menuOpen ? <X /> : <Menu />}
-              </Button>
+      <main id="top">
+        <section className="mx-auto grid max-w-[1440px] items-center gap-6 px-5 py-8 lg:min-h-[680px] lg:grid-cols-[0.88fr_1.12fr] lg:gap-8 lg:px-10 lg:py-12">
+          <div className="relative z-10 max-w-xl py-3 lg:py-10 lg:pl-8">
+            <div className="mb-4 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-accent sm:text-xs lg:mb-5"><span className="h-px w-9 bg-accent" /> Harvested with care</div>
+            <h1 className="font-display text-[2.7rem] font-semibold leading-[1.08] text-primary sm:text-6xl lg:text-[4.6rem]">Nature’s finest,<br/><span className="text-accent">chosen for you.</span></h1>
+            <p className="mt-4 max-w-lg text-sm leading-6 text-muted-foreground sm:mt-6 sm:text-lg sm:leading-8">From orchard-fresh almonds to indulgent dates, discover dry fruits selected for exceptional taste, texture, and everyday goodness.</p>
+            <div className="mt-6 flex flex-wrap gap-3 sm:mt-9">
+              <a href="#shop" className="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-4 text-xs font-bold text-primary-foreground shadow-lg shadow-primary/15 transition-transform hover:-translate-y-0.5 sm:h-13 sm:gap-3 sm:px-7 sm:text-sm">Shop collection <ArrowRight size={17} /></a>
+              <a href="#gifting" className="inline-flex h-11 items-center gap-2 rounded-md border border-accent px-4 text-xs font-bold text-primary transition-colors hover:bg-secondary sm:h-13 sm:gap-3 sm:px-7 sm:text-sm">Explore gifting <Gift size={17} /></a>
             </div>
+            <div className="mt-6 hidden flex-wrap gap-x-6 gap-y-3 text-xs font-semibold text-muted-foreground sm:flex lg:mt-10"><span className="flex items-center gap-2"><Check size={15} className="text-accent" /> Quality checked</span><span className="flex items-center gap-2"><Check size={15} className="text-accent" /> Hygienically packed</span><span className="flex items-center gap-2"><Check size={15} className="text-accent" /> Pan-India delivery</span></div>
           </div>
-          {searchOpen && (
-            <div className="pb-4">
-              <label htmlFor="site-search" className="sr-only">Search products</label>
-              <div className="flex items-center gap-3 border-b border-primary pb-2">
-                <Search className="size-4" />
-                <input id="site-search" autoFocus placeholder="Search almonds, dates, hampers…" className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+          <div className="relative h-[260px] sm:h-[430px] lg:h-[620px]">
+            <div className="absolute inset-0 overflow-hidden rounded-md border border-border/70 bg-secondary">
+              <img src={heroImage} alt="A premium spread of almonds, pistachios, cashews, walnuts and dates" className="h-full w-full object-cover" width={1536} height={1152} />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary/70 to-transparent p-7 pt-24 text-primary-foreground sm:p-9">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">The signature selection</p>
+                <div className="mt-2 flex items-end justify-between gap-4"><h2 className="font-display text-2xl font-semibold sm:text-3xl">Five favourites. One beautiful ritual.</h2><a href="#shop" aria-label="Shop signature selection" className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground sm:flex"><ArrowRight size={19} /></a></div>
               </div>
             </div>
-          )}
-          {menuOpen && (
-            <nav className="grid gap-1 border-t border-border py-3 lg:hidden" aria-label="Mobile navigation">
-              {["Shop", "Categories", "Gifting", "Our Story"].map((item) => (
-                <a key={item} href={`#${item.toLowerCase().replace(" ", "")}`} onClick={() => setMenuOpen(false)} className="py-2 text-sm font-medium">{item}</a>
-              ))}
-            </nav>
-          )}
-          <nav className="hidden items-center gap-7 pb-4 text-[13px] font-medium text-muted-foreground lg:flex" aria-label="Product categories">
-            {["Almonds", "Cashews", "Walnuts", "Dates", "Dried Fruits", "Seeds & Nuts", "Hampers"].map((item) => <a href="#categories" key={item} className="transition-colors hover:text-destructive">{item}</a>)}
-          </nav>
-        </div>
-      </header>
-
-      <section id="top" className="bg-primary text-primary-foreground">
-        <div className="mx-auto grid max-w-[1440px] items-center gap-12 px-5 py-16 lg:grid-cols-12 lg:px-10 lg:py-24">
-          <div className="animate-pantry-rise lg:col-span-7">
-            <p className="mb-5 text-xs uppercase text-accent">The Festive Pantry · 2026</p>
-            <h1 className="max-w-[18ch] text-balance font-display text-4xl leading-tight sm:text-5xl lg:text-6xl">A hamper that opens like a festival.</h1>
-            <p className="mt-6 max-w-[48ch] text-pretty text-base text-primary-foreground/75 sm:text-lg">Single-origin almonds, premium cashews and Medjool dates, hand-sorted and packed in small batches. Layered, generous, and made for sharing.</p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Button asChild variant="gold" size="shop"><a href="#shop">Shop the collection <ChevronRight /></a></Button>
-              <Button asChild variant="pantryGhost" size="shop"><a href="#gifting">Build a hamper</a></Button>
-            </div>
-            <dl className="mt-10 grid max-w-md grid-cols-3 gap-5">
-              <div><dt className="font-display text-2xl text-accent">4.9</dt><dd className="mt-1 text-xs text-primary-foreground/60">12,400 reviews</dd></div>
-              <div><dt className="font-display text-2xl text-accent">38</dt><dd className="mt-1 text-xs text-primary-foreground/60">single origins</dd></div>
-              <div><dt className="font-display text-2xl text-accent">48h</dt><dd className="mt-1 text-xs text-primary-foreground/60">fresh dispatch</dd></div>
-            </dl>
+            <div className="absolute -bottom-4 left-4 flex items-center gap-3 rounded-md border border-border bg-card p-3 pr-5 shadow-xl sm:-left-5 sm:bottom-8"><span className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-primary"><Sparkles size={18} /></span><div><p className="text-xs font-bold text-primary">Freshly packed</p><p className="text-[11px] text-muted-foreground">in small, careful batches</p></div></div>
           </div>
-          <div className="animate-pantry-rise lg:col-span-5">
-            <div className="grid grid-cols-2 gap-4">
-              {products.map((product, index) => (
-                <article key={product.name} className={`overflow-hidden rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 ${index % 2 ? "mt-8" : ""}`}>
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img src={bestsellerCollection} alt="" className={`absolute h-[200%] w-[200%] max-w-none object-cover ${product.crop}`} />
-                  </div>
-                  <div className="p-4"><p className="text-[11px] uppercase text-accent">{product.badge}</p><h2 className="mt-1 font-display text-base">{product.name}</h2><p className="mt-1 text-sm text-primary-foreground/60">{product.price}</p></div>
-                </article>
-              ))}
+        </section>
+
+        <section className="bg-primary py-6 text-primary-foreground">
+          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-5 px-5 lg:grid-cols-4">
+            {[{icon:Leaf,title:"Responsibly sourced",sub:"Selected at origin"},{icon:ShieldCheck,title:"Purity guaranteed",sub:"Quality checked"},{icon:Truck,title:"Swift delivery",sub:"Packed to stay fresh"},{icon:Gift,title:"Made for gifting",sub:"Beautifully presented"}].map(({icon:Icon,title,sub}) => <div key={title} className="flex items-center gap-3 lg:justify-center"><Icon size={21} className="shrink-0 text-accent" strokeWidth={1.6}/><div><p className="text-xs font-bold sm:text-sm">{title}</p><p className="text-[10px] text-primary-foreground/65 sm:text-xs">{sub}</p></div></div>)}
+          </div>
+        </section>
+
+        <section id="categories" className="mx-auto max-w-[1360px] px-5 py-20 lg:px-10 lg:py-28">
+          <div className="mb-9 flex items-end justify-between"><div><p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-accent">Find your favourite</p><h2 className="font-display text-3xl font-semibold text-primary sm:text-4xl">Shop by craving</h2></div><a href="#shop" className="hidden items-center gap-2 text-sm font-bold text-primary sm:flex">View all <ChevronRight size={17}/></a></div>
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
+            {categories.map((item) => <a href="#shop" key={item.name} className="group relative aspect-[4/5] overflow-hidden rounded-md bg-secondary"><img src={collectionImage} alt={item.name} loading="lazy" width={1536} height={1024} className={`h-full w-full scale-[1.7] object-cover ${item.crop} transition-transform duration-500 group-hover:scale-[1.78]`} /><div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/5 to-transparent"/><div className="absolute inset-x-0 bottom-0 p-4 text-primary-foreground sm:p-6"><p className="font-display text-xl font-semibold sm:text-2xl">{item.name}</p><p className="mt-1 text-xs text-primary-foreground/75">{item.note}</p></div></a>)}
+          </div>
+        </section>
+
+        <section id="shop" className="bg-card py-20 lg:py-28">
+          <div className="mx-auto max-w-[1360px] px-5 lg:px-10">
+            <div className="mb-10 text-center"><p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-accent">Loved by everyone</p><h2 className="font-display text-3xl font-semibold text-primary sm:text-4xl">Our bestselling picks</h2><p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted-foreground">Wholesome pantry staples and naturally indulgent treats, packed fresh for your table.</p></div>
+            <div className="grid grid-cols-2 gap-x-3 gap-y-8 lg:grid-cols-4 lg:gap-5">
+              {products.map((product) => <article key={product.name} className="group"><div className="relative aspect-square overflow-hidden rounded-md bg-secondary"><Link to="/products/$slug" params={{ slug: product.slug }} aria-label={`View ${product.name}`}><img src={collectionImage} alt={product.name} loading="lazy" width={1536} height={1024} className={`h-full w-full scale-[1.55] object-cover ${product.crop} transition-transform duration-500 group-hover:scale-[1.62]`} /></Link><span className="absolute left-3 top-3 rounded-sm bg-card/95 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.08em] text-primary sm:text-[10px]">{product.badge}</span><Button variant="secondary" size="icon-sm" aria-label={`Add ${product.name} to wishlist`} className="absolute right-3 top-3 rounded-full"><Heart size={15}/></Button></div><div className="pt-4"><p className="text-xs text-muted-foreground">{product.detail}</p><Link to="/products/$slug" params={{ slug: product.slug }}><h3 className="mt-1 font-display text-sm font-semibold text-primary sm:text-base">{product.name}</h3></Link><div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><p className="font-bold text-primary">₹{product.price} <span className="ml-1 text-xs font-normal text-muted-foreground line-through">₹{product.oldPrice}</span></p><Button variant="outline" size="sm" onClick={() => addItem(product.slug, product.sizes[0].label)}><Plus size={14}/> Add</Button></div></div></article>)}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="categories" className="bg-background">
-        <div className="mx-auto max-w-[1440px] px-5 py-16 lg:px-10 lg:py-20">
-          <SectionTitle eyebrow="Browse the pantry" title="Every shelf, sorted by hand" action="View all" />
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
-            {categories.map((category) => (
-              <a key={category.name} href="#shop" className="group block">
-                <div className="aspect-[4/5] overflow-hidden rounded-lg bg-muted">
-                  <img src={categoryCollection} alt={category.name} loading="lazy" width={1600} height={1200} className={`absolute h-full w-[400%] max-w-none object-cover transition-transform duration-500 group-hover:scale-[1.02] ${category.crop}`} />
-                </div>
-                <h3 className="mt-4 font-display text-base sm:text-lg">{category.name}</h3>
-                <p className="text-sm text-muted-foreground">{category.count}</p>
-              </a>
-            ))}
+        <section id="gifting" className="mx-auto max-w-[1360px] px-5 py-20 lg:px-10 lg:py-28">
+          <div className="grid overflow-hidden rounded-md bg-secondary lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="relative min-h-[370px] lg:min-h-[520px]"><img src={heroImage} alt="Premium dry fruit gift selection" loading="lazy" width={1536} height={1152} className="absolute inset-0 h-full w-full object-cover object-center"/><div className="absolute inset-0 bg-primary/10"/></div>
+            <div className="flex flex-col justify-center p-8 sm:p-12 lg:p-16"><p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-accent">Gifts with good taste</p><h2 className="font-display text-3xl font-semibold leading-tight text-primary sm:text-4xl">A thoughtful box for every celebration.</h2><p className="mt-5 max-w-md text-sm leading-7 text-muted-foreground">Curated dry-fruit assortments dressed in elegant packaging—perfect for festivals, weddings, corporate gifting, and warm everyday gestures.</p><div className="mt-8 flex items-center gap-6"><a href="#shop" className="inline-flex h-12 items-center gap-2 rounded-md bg-primary px-6 text-sm font-bold text-primary-foreground">Discover gift boxes <ArrowRight size={16}/></a><span className="hidden text-sm font-semibold text-primary sm:block">From ₹799</span></div></div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="shop" className="bg-background">
-        <div className="mx-auto max-w-[1440px] px-5 pb-16 lg:px-10 lg:pb-24">
-          <SectionTitle eyebrow="Bestsellers" title="The ones that sell out first" action="Shop all" />
-          <div className="grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4 lg:gap-5">
-            {products.map((product) => (
-              <article className="group" key={product.name}>
-                <div className="relative aspect-square overflow-hidden rounded-lg bg-muted">
-                  <img src={bestsellerCollection} alt={product.name} loading="lazy" width={1600} height={1600} className={`absolute h-[200%] w-[200%] max-w-none object-cover transition-transform duration-500 group-hover:scale-[2.04] ${product.crop}`} />
-                  <span className="absolute left-3 top-3 rounded bg-background/90 px-2 py-1 text-[10px] font-semibold uppercase text-foreground">{product.badge}</span>
-                </div>
-                <div className="mt-4 flex items-start justify-between gap-2">
-                  <div><h3 className="font-display text-base leading-tight sm:text-lg">{product.name}</h3><p className="mt-1 text-xs text-muted-foreground sm:text-sm">{product.detail}</p></div>
-                  <p className="shrink-0 font-display text-base sm:text-lg">{product.price}</p>
-                </div>
-                <Button variant="pantry" className="mt-4 w-full" onClick={() => setCartCount((count) => count + 1)}><ShoppingBag /> Add to cart</Button>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+        <section className="border-y border-border bg-secondary py-14"><div className="mx-auto flex max-w-3xl flex-col items-center px-5 text-center"><span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground"><Leaf size={20}/></span><h2 className="mt-5 font-display text-2xl font-semibold text-primary sm:text-3xl">Goodness, delivered to your inbox.</h2><p className="mt-2 text-sm text-muted-foreground">New harvests, mindful snacking ideas, and first access to festive collections.</p><form onSubmit={(e) => e.preventDefault()} className="mt-6 flex w-full max-w-lg gap-2"><input aria-label="Email address" type="email" required placeholder="Your email address" className="h-12 min-w-0 flex-1 rounded-md border border-border bg-card px-4 text-sm outline-none"/><button className="h-12 rounded-md bg-primary px-5 text-sm font-bold text-primary-foreground">Subscribe</button></form></div></section>
+      </main>
 
-      <section id="gifting" className="bg-destructive text-destructive-foreground">
-        <div className="mx-auto grid max-w-[1440px] items-center gap-10 px-5 py-16 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-20">
-          <div className="aspect-square overflow-hidden rounded-lg"><img src={festiveHamper} alt="Premium festive dry-fruit hamper" loading="lazy" width={1200} height={1200} className="h-full w-full object-cover" /></div>
-          <div>
-            <p className="mb-4 text-xs uppercase text-accent">Gifting</p>
-            <h2 className="max-w-[40ch] text-balance font-display text-3xl lg:text-4xl">The festive hamper, packed like a celebration</h2>
-            <p className="mt-5 max-w-[48ch] text-pretty text-destructive-foreground/80">A layered box of almonds, cashews, dates, pistachios and saffron, tied with a gold ribbon and a handwritten note. Ready to send across India.</p>
-            <div className="mt-7 flex flex-wrap gap-3"><Button variant="cream" size="shop">Build a hamper</Button><Button variant="ghost" size="shop" className="text-destructive-foreground hover:bg-destructive-foreground/10 hover:text-accent">See all hampers</Button></div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-background">
-        <div className="mx-auto grid max-w-[1440px] gap-8 px-5 py-14 sm:grid-cols-3 lg:px-10">
-          {[['Hand-sorted daily','Every batch is carefully inspected before it reaches your door.'],['Sourced for flavour','We select for size, aroma, texture and the character of each harvest.'],['Sealed for freshness','Protective packs keep natural flavour and crunch intact.']].map(([title, copy]) => (
-            <div key={title} className="border-l-2 border-accent pl-5"><h3 className="font-display text-lg">{title}</h3><p className="mt-2 max-w-[40ch] text-pretty text-sm text-muted-foreground">{copy}</p></div>
-          ))}
-        </div>
-      </section>
-
-      <section id="story" className="bg-primary text-primary-foreground">
-        <div className="mx-auto grid max-w-[1440px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:gap-14 lg:px-10 lg:py-20">
-          <div className="lg:col-span-5"><img src={provenance} alt="Almonds being sorted by hand" loading="lazy" width={1008} height={1264} className="aspect-[4/5] w-full rounded-lg object-cover" /></div>
-          <div className="lg:col-span-7">
-            <p className="mb-4 text-xs uppercase text-accent">Provenance</p>
-            <h2 className="max-w-[40ch] text-balance font-display text-3xl lg:text-4xl">From trusted growers to your table</h2>
-            <p className="mt-5 max-w-[52ch] text-pretty text-primary-foreground/75">We work closely with growers and specialist suppliers to select each batch at its best. The result is simple: honest ingredients, careful sorting and freshness you can taste.</p>
-            <blockquote className="mt-8 border-l-2 border-accent pl-5"><p className="font-display text-lg italic text-primary-foreground/90">“Premium isn’t a label. It’s the care you can see in every handful.”</p><cite className="mt-3 block text-sm not-italic text-primary-foreground/55">— The Mundra family</cite></blockquote>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-background">
-        <div className="mx-auto max-w-[1440px] px-5 py-16 lg:px-10 lg:py-20">
-          <div className="rounded-xl bg-primary px-6 py-12 text-center text-primary-foreground lg:px-16">
-            {subscribed ? (
-              <div className="mx-auto flex max-w-md flex-col items-center"><Check className="mb-4 size-8 text-accent" /><h2 className="font-display text-2xl">You’re on the pantry list.</h2><p className="mt-2 text-sm text-primary-foreground/70">Watch your inbox for seasonal arrivals.</p></div>
-            ) : (
-              <><p className="mb-4 text-xs uppercase text-accent">The Pantry Letter</p><h2 className="mx-auto max-w-[40ch] text-balance font-display text-3xl lg:text-4xl">Seasonal drops, before they sell out</h2><p className="mx-auto mt-4 max-w-[48ch] text-pretty text-primary-foreground/70">One email a month. New origins, hampers and a recipe from our kitchen.</p><form onSubmit={subscribe} className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"><label htmlFor="newsletter" className="sr-only">Email address</label><input id="newsletter" required type="email" placeholder="you@email.com" className="min-w-0 flex-1 rounded-lg border border-primary-foreground/20 bg-primary-foreground/10 px-4 py-3 text-sm text-primary-foreground outline-none placeholder:text-primary-foreground/40 focus:border-accent" /><Button variant="gold" type="submit" size="shop">Subscribe</Button></form></>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <footer className="bg-primary text-primary-foreground/70">
-        <div className="mx-auto max-w-[1440px] px-5 py-14 lg:px-10">
-          <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end"><div><div className="flex items-center gap-3"><span className="grid size-9 place-items-center rounded-lg bg-accent font-display font-bold text-accent-foreground">M</span><span className="font-display text-xl text-primary-foreground">Mundra Dry Fruits</span></div><p className="mt-4 max-w-[40ch] text-pretty text-sm">Premium dry fruits, carefully sorted and packed fresh.</p></div><nav className="flex flex-wrap gap-x-8 gap-y-3 text-sm"><a href="#shop">Shop</a><a href="#gifting">Gifting</a><a href="#story">Our Story</a><a href="mailto:hello@mundradryfruits.com">Contact</a></nav></div>
-          <div className="mt-10 flex flex-col justify-between gap-3 border-t border-primary-foreground/10 pt-6 text-xs text-primary-foreground/45 sm:flex-row"><p>© 2026 Mundra Dry Fruits. All rights reserved.</p><p>Made with care in India</p></div>
-        </div>
-      </footer>
-    </main>
+      <footer className="bg-primary px-5 py-12 text-primary-foreground"><div className="mx-auto flex max-w-[1360px] flex-col items-center justify-between gap-7 border-b border-primary-foreground/15 pb-9 text-center md:flex-row md:text-left"><img src={logo.url} alt="ASM Delights" className="h-20 w-36 rounded-sm bg-secondary object-contain p-1" width="144" height="80"/><p className="max-w-sm text-sm leading-6 text-primary-foreground/65">Premium dry fruits selected with care, packed for freshness, and made for everyday delight.</p><div className="flex gap-6 text-sm font-semibold"><a href="#shop">Shop</a><a href="#gifting">Gifting</a><a href="mailto:care@asmdelights.com">Contact</a></div></div><div className="mx-auto flex max-w-[1360px] flex-col items-center justify-between gap-3 pt-7 text-xs text-primary-foreground/55 sm:flex-row"><p>© 2026 ASM Delights. All rights reserved.</p><p>Crafted for better snacking.</p></div></footer>
+    </div>
   );
-}
-
-function SectionTitle({ eyebrow, title, action }: { eyebrow: string; title: string; action: string }) {
-  return <div className="mb-10 flex items-end justify-between"><div><p className="mb-3 text-xs uppercase text-destructive">{eyebrow}</p><h2 className="max-w-[40ch] text-balance font-display text-3xl lg:text-4xl">{title}</h2></div><a href="#shop" className="hidden items-center gap-1 text-sm font-medium transition-colors hover:text-destructive sm:inline-flex">{action}<ChevronRight className="size-4" /></a></div>;
 }

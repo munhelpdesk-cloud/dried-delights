@@ -1,0 +1,24 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { StoreHeader } from "@/components/store-header";
+import { products } from "@/data/catalog";
+import { useCart } from "@/lib/cart";
+
+export const Route = createFileRoute("/cart")({
+  head: () => ({ meta: [
+    { title: "Your Bag | ASM Delights" },
+    { name: "description", content: "Review your selected ASM Delights dry fruits and gift boxes." },
+    { property: "og:title", content: "Your Bag | ASM Delights" },
+    { property: "og:description", content: "Review your premium dry-fruit selection." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary_large_image" },
+  ] }),
+  component: CartPage,
+});
+
+function CartPage() {
+  const { items, subtotal, setQuantity } = useCart();
+  const delivery = subtotal >= 999 || subtotal === 0 ? 0 : 79;
+  return <div className="min-h-screen bg-background"><StoreHeader /><main className="mx-auto max-w-6xl px-5 py-10 lg:px-10 lg:py-16"><div className="mb-9 flex items-end justify-between"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-accent">Your selection</p><h1 className="mt-2 font-display text-4xl font-semibold text-primary">Shopping bag</h1></div><Link to="/" className="text-sm font-semibold text-primary">Continue shopping</Link></div>{items.length === 0 ? <div className="border-y border-border py-20 text-center"><ShoppingBag className="mx-auto text-accent" size={34} /><h2 className="mt-5 font-display text-2xl font-semibold text-primary">Your bag is empty</h2><p className="mt-2 text-sm text-muted-foreground">Choose something delicious from our fresh selection.</p><Button asChild className="mt-6"><Link to="/">Explore the collection</Link></Button></div> : <div className="grid gap-10 lg:grid-cols-[1fr_360px]"><section className="divide-y divide-border border-y border-border">{items.map((item) => { const product = products.find((entry) => entry.slug === item.slug); if (!product) return null; const price = product.sizes.find((entry) => entry.label === item.size)?.price ?? product.price; return <article key={`${item.slug}-${item.size}`} className="grid grid-cols-[96px_1fr] gap-4 py-5 sm:grid-cols-[128px_1fr_auto]"><Link to="/products/$slug" params={{ slug: product.slug }} className="aspect-square overflow-hidden rounded-md bg-secondary"><img src={product.image} alt={product.name} className={`h-full w-full scale-[1.55] object-cover ${product.crop}`} /></Link><div><Link to="/products/$slug" params={{ slug: product.slug }} className="font-display font-semibold text-primary">{product.name}</Link><p className="mt-1 text-xs text-muted-foreground">Size: {item.size}</p><p className="mt-3 font-bold text-primary">₹{price}</p><div className="mt-4 flex h-9 w-fit items-center rounded-md border border-input"><Button variant="ghost" size="icon-sm" aria-label={`Decrease ${product.name}`} onClick={() => setQuantity(item.slug, item.size, item.quantity - 1)}><Minus /></Button><span className="w-8 text-center text-xs font-bold">{item.quantity}</span><Button variant="ghost" size="icon-sm" aria-label={`Increase ${product.name}`} onClick={() => setQuantity(item.slug, item.size, item.quantity + 1)}><Plus /></Button></div></div><div className="col-start-2 flex items-center justify-between sm:col-start-auto sm:flex-col sm:items-end"><p className="font-bold text-primary">₹{price * item.quantity}</p><Button variant="ghost" size="icon-sm" aria-label={`Remove ${product.name}`} onClick={() => setQuantity(item.slug, item.size, 0)}><Trash2 /></Button></div></article>; })}</section><aside className="h-fit rounded-md border border-border bg-card p-6"><h2 className="font-display text-xl font-semibold text-primary">Order summary</h2><div className="mt-5 space-y-3 border-b border-border pb-5 text-sm"><div className="flex justify-between"><span className="text-muted-foreground">Subtotal</span><span>₹{subtotal}</span></div><div className="flex justify-between"><span className="text-muted-foreground">Delivery</span><span>{delivery ? `₹${delivery}` : "Complimentary"}</span></div></div><div className="flex justify-between py-5 font-bold text-primary"><span>Total</span><span>₹{subtotal + delivery}</span></div>{subtotal < 999 && <p className="mb-4 text-xs text-muted-foreground">Add ₹{999 - subtotal} more for complimentary delivery.</p>}<Button asChild className="h-11 w-full"><Link to="/checkout">Proceed to checkout</Link></Button><p className="mt-4 text-center text-[11px] text-muted-foreground">Taxes included. Payment is presented for review only.</p></aside></div>}</main></div>;
+}
