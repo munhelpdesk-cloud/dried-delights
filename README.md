@@ -1,14 +1,24 @@
-# Welcome to your Lovable project
+# Dried Delights
+
+1. dryfruit ecom store 
+
+2. colour palate accoring the logo 
+
+3. inspierd by the https://www.farmley.com/ [12:09, 9/29/2026] Yash: ok
+
+[12:10, 9/29/2026] +91 62006 35859: https://www.farmley.com/
+
+The website will be created in a similar style, but the overall colour combination will be changed. After that, the rest is completely up to you you can decide what advanced features and elements should be added to make the website look more premium and professional. i dont want the shopify so plse dont ask for that i want only ui right now  UI looks polished and professional….
 
 This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/fce2a309-c3db-41cf-ad5d-360cd5dcd0b3).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +30,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
