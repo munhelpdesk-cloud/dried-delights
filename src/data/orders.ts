@@ -76,12 +76,12 @@ export const orders: Order[] = [
 /** Previous purchases per phone number, used for the "product history" section. */
 export const purchaseHistory: Record<string, { orderId: string; date: string; items: OrderItem[]; total: number }[]> = {
   "9876543210": [
-    { orderId: "ASM-10482", date: "28 Sep 2026", items: orders[0].items, total: 1727 },
+    { orderId: "ASM-10482", date: "28 Sep 2026", items: orders[0]!.items, total: 1727 },
     { orderId: "ASM-09876", date: "02 Aug 2026", items: [{ slug: "california-almonds", name: "California Almonds", size: "1kg", qty: 1, price: 1199 }], total: 1199 },
     { orderId: "ASM-09104", date: "15 Jun 2026", items: [{ slug: "whole-cashews-w320", name: "Whole Cashews W320", size: "500g", qty: 1, price: 799 }], total: 799 },
   ],
   "9123456780": [
-    { orderId: "ASM-10317", date: "18 Sep 2026", items: orders[1].items, total: 1499 },
+    { orderId: "ASM-10317", date: "18 Sep 2026", items: orders[1]!.items, total: 1499 },
   ],
 };
 

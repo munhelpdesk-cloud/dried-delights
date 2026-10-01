@@ -22,7 +22,7 @@ function loadThreads(): { threads: Thread[]; active: string } {
     localStorage.setItem(KEY, JSON.stringify(threads));
   }
   const stored = localStorage.getItem(ACTIVE_KEY);
-  const active = threads.some((t) => t.id === stored) ? stored! : threads[0].id;
+  const active = threads.some((t) => t.id === stored) ? stored! : threads[0]!.id;
   return { threads, active };
 }
 
@@ -53,7 +53,7 @@ export function ChatWidget() {
     commit((p) => {
       const rest = p.filter((t) => t.id !== id);
       const next = rest.length ? rest : [newThread()];
-      fallback = next[0].id;
+      fallback = next[0]!.id;
       return next;
     });
     if (id === activeId) setTimeout(() => select(fallback));

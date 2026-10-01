@@ -11,7 +11,7 @@ For order status, tell customers to use the Track Order page with their Order ID
 Keep answers warm, concise (under 150 words), and formatted in markdown.`;
 
 export async function handleChat(request: Request) {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env['LOVABLE_API_KEY'];
   if (!apiKey) return new Response("AI is not configured", { status: 500 });
 
   let messages: UIMessage[];
