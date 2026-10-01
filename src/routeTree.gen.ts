@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as TrackOrderRouteImport } from './routes/track-order'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +37,16 @@ const CheckoutRoute = CheckoutRouteImport.update({
   path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrackOrderRoute = TrackOrderRouteImport.update({
+  id: '/track-order',
+  path: '/track-order',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsSlugRoute = ProductsSlugRouteImport.update({
   id: '/products/$slug',
   path: '/products/$slug',
@@ -46,6 +58,8 @@ export interface FileRoutesByFullPath {
   '/assistant': typeof AssistantRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/track-order': typeof TrackOrderRoute
+  '/api/chat': typeof ApiChatRoute
   '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +67,8 @@ export interface FileRoutesByTo {
   '/assistant': typeof AssistantRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/track-order': typeof TrackOrderRoute
+  '/api/chat': typeof ApiChatRoute
   '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRoutesById {
@@ -61,15 +77,38 @@ export interface FileRoutesById {
   '/assistant': typeof AssistantRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/track-order': typeof TrackOrderRoute
+  '/api/chat': typeof ApiChatRoute
   '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/assistant' | '/cart' | '/checkout' | '/products/$slug'
+  fullPaths:
+    | '/'
+    | '/assistant'
+    | '/cart'
+    | '/checkout'
+    | '/track-order'
+    | '/api/chat'
+    | '/products/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/assistant' | '/cart' | '/checkout' | '/products/$slug'
+  to:
+    | '/'
+    | '/assistant'
+    | '/cart'
+    | '/checkout'
+    | '/track-order'
+    | '/api/chat'
+    | '/products/$slug'
   id:
-    '__root__' | '/' | '/assistant' | '/cart' | '/checkout' | '/products/$slug'
+    | '__root__'
+    | '/'
+    | '/assistant'
+    | '/cart'
+    | '/checkout'
+    | '/track-order'
+    | '/api/chat'
+    | '/products/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +116,8 @@ export interface RootRouteChildren {
   AssistantRoute: typeof AssistantRoute
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
+  TrackOrderRoute: typeof TrackOrderRoute
+  ApiChatRoute: typeof ApiChatRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
 }
 
@@ -110,6 +151,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/track-order': {
+      id: '/track-order'
+      path: '/track-order'
+      fullPath: '/track-order'
+      preLoaderRoute: typeof TrackOrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products/$slug': {
       id: '/products/$slug'
       path: '/products/$slug'
@@ -125,6 +180,8 @@ const rootRouteChildren: RootRouteChildren = {
   AssistantRoute: AssistantRoute,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
+  TrackOrderRoute: TrackOrderRoute,
+  ApiChatRoute: ApiChatRoute,
   ProductsSlugRoute: ProductsSlugRoute,
 }
 export const routeTree = rootRouteImport

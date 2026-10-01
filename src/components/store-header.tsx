@@ -22,6 +22,7 @@ export function StoreHeader() {
           <nav className="hidden items-center gap-7 text-sm font-semibold text-primary lg:flex">
             <Link to="/">Shop</Link>
             <Link to="/assistant" className="flex items-center gap-2"><WandSparkles size={16} /> Find my pick</Link>
+            <Link to="/track-order">Track order</Link>
           </nav>
           <Link to="/" aria-label="ASM Delights home" className="absolute left-1/2 -translate-x-1/2">
             <img src={logo.url} alt="ASM Delights" className="h-16 w-28 object-contain" width="112" height="64" />
@@ -37,7 +38,7 @@ export function StoreHeader() {
           </div>
         </div>
         {searchOpen && <div className="border-t border-border bg-card px-5 py-4"><div className="mx-auto flex max-w-2xl items-center gap-3 border-b border-primary pb-2"><Search size={18} className="text-muted-foreground" /><input autoFocus aria-label="Search products" placeholder="Search almonds, dates, gift boxes..." className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground" /><Button variant="ghost" size="icon" aria-label="Close search" onClick={() => setSearchOpen(false)}><X /></Button></div></div>}
-        {menuOpen && <nav className="grid border-t border-border bg-card px-5 py-4 text-sm font-semibold text-primary lg:hidden"><Link className="border-b border-border py-3" to="/" onClick={() => setMenuOpen(false)}>Shop</Link><Link className="py-3" to="/assistant" onClick={() => setMenuOpen(false)}>Find my perfect pick</Link></nav>}
+        {menuOpen && <nav className="grid border-t border-border bg-card px-5 py-4 text-sm font-semibold text-primary lg:hidden"><Link className="border-b border-border py-3" to="/" onClick={() => setMenuOpen(false)}>Shop</Link><Link className="border-b border-border py-3" to="/assistant" onClick={() => setMenuOpen(false)}>Find my perfect pick</Link><Link className="py-3" to="/track-order" onClick={() => setMenuOpen(false)}>Track order</Link></nav>}
       </header>
     </>
   );
