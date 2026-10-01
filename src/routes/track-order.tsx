@@ -69,7 +69,7 @@ function OrderDetails({ order }: { order: Order }) {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-sm text-muted-foreground">Order {order.id} • Placed {order.placedOn}</p>
-            <h2 className="mt-1 font-display text-2xl font-semibold text-primary">{orderSteps[current].label}</h2>
+            <h2 className="mt-1 font-display text-2xl font-semibold text-primary">{orderSteps[current]?.label}</h2>
             <p className="mt-1 text-sm font-medium text-foreground">{order.eta}</p>
           </div>
           <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">{order.status === "delivered" ? "Completed" : "In transit"}</span>
@@ -135,7 +135,7 @@ function OrderDetails({ order }: { order: Order }) {
                 <p className="mt-1 text-sm text-muted-foreground">{h.items.map((i) => `${i.name} (${i.size})`).join(", ")}</p>
                 <div className="mt-2 flex items-center justify-between">
                   <span className="text-sm font-semibold text-primary">{inr(h.total)}</span>
-                  <Link to="/products/$slug" params={{ slug: h.items[0].slug }} className="text-xs font-semibold text-primary underline underline-offset-4">Buy again</Link>
+                  <Link to="/products/$slug" params={{ slug: h.items[0]?.slug ?? "" }} className="text-xs font-semibold text-primary underline underline-offset-4">Buy again</Link>
                 </div>
               </li>
             ))}
