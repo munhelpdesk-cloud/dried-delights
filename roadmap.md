@@ -9,6 +9,6 @@
 - [x] Add product detail pages and shared catalog data
 - [x] Add persistent UI-only cart and checkout flow
 - [x] Add AI product and recipe recommendations
-- [ ] Rebuild the storefront around product-first shopping
-- [ ] Add shop, collection, gifting, brand, support, and policy pages
+- [x] Rebuild the storefront around product-first shopping
+- [x] Add shop, collection, gifting, brand, support, and policy pages
 - [ ] Verify desktop and mobile flows
