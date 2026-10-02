@@ -12,4 +12,3 @@
 - [x] Rebuild the storefront around product-first shopping
 - [x] Add shop, collection, gifting, brand, support, and policy pages
 - [x] Verify desktop and mobile flows
-- [x] Apply the selected Regal Editorial luxury redesign and verify it
