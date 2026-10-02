@@ -1,96 +1,39 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Check, ChevronRight, Gift, Heart, Leaf, Plus, ShieldCheck, Sparkles, Truck } from "lucide-react";
-import logo from "@/assets/asm-delights-logo.png.asset.json";
-import heroImage from "@/assets/asm-hero-dry-fruits.jpg";
-import collectionImage from "@/assets/asm-product-collection.jpg";
-import { StoreHeader } from "@/components/store-header";
+import { ArrowRight, BadgeCheck, Gift, Leaf, PackageCheck, ShieldCheck, Star, Truck } from "lucide-react";
+import heroImage from "@/assets/asm-campaign-hero.jpg";
+import categoryImage from "@/assets/asm-packaging-lineup.jpg";
+import giftImage from "@/assets/asm-gift-box.jpg";
+import { ProductCard } from "@/components/product-card";
+import { StoreShell } from "@/components/store-shell";
 import { Button } from "@/components/ui/button";
 import { products } from "@/data/catalog";
-import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
     { title: "ASM Delights | Premium Dry Fruits, Nuts & Gift Boxes" },
-    { name: "description", content: "Shop premium almonds, cashews, pistachios, dates and curated gift boxes from ASM Delights." },
+    { name: "description", content: "Shop premium almonds, cashews, pistachios, dates, healthy mixes and elegant gift boxes from ASM Delights." },
     { property: "og:title", content: "ASM Delights | Premium Dry Fruits & Gifting" },
-    { property: "og:description", content: "Everyday nourishment and thoughtful gifting, handpicked for freshness." },
+    { property: "og:description", content: "Freshly packed premium dry fruits and thoughtful gifts delivered across India." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
-  ] }),
-  component: Index,
+  ] }), component: HomePage,
 });
 
 const categories = [
-  { name: "Almonds", note: "Daily crunch", crop: "object-[20%_70%]" },
-  { name: "Cashews", note: "Creamy classics", crop: "object-[70%_80%]" },
-  { name: "Pistachios", note: "Roasted goodness", crop: "object-[23%_15%]" },
-  { name: "Dates", note: "Naturally sweet", crop: "object-[78%_12%]" },
+  { name: "Almonds", slug: "nuts", pos: "object-[7%_50%]" }, { name: "Cashews", slug: "nuts", pos: "object-[25%_50%]" },
+  { name: "Pistachios", slug: "nuts", pos: "object-[43%_50%]" }, { name: "Dates", slug: "dry-fruits", pos: "object-[61%_50%]" },
+  { name: "Walnuts", slug: "nuts", pos: "object-[79%_50%]" }, { name: "Healthy Mixes", slug: "berries-seeds", pos: "object-[96%_50%]" },
 ];
 
-function Index() {
-  const { addItem } = useCart();
-
-  return (
-    <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <StoreHeader />
-
-      <main id="top">
-        <section className="mx-auto grid max-w-[1440px] items-center gap-6 px-5 py-8 lg:min-h-[680px] lg:grid-cols-[0.88fr_1.12fr] lg:gap-8 lg:px-10 lg:py-12">
-          <div className="relative z-10 max-w-xl py-3 lg:py-10 lg:pl-8">
-            <div className="mb-4 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-accent sm:text-xs lg:mb-5"><span className="h-px w-9 bg-accent" /> Harvested with care</div>
-            <h1 className="font-display text-[2.7rem] font-semibold leading-[1.08] text-primary sm:text-6xl lg:text-[4.6rem]">Nature’s finest,<br/><span className="text-accent">chosen for you.</span></h1>
-            <p className="mt-4 max-w-lg text-sm leading-6 text-muted-foreground sm:mt-6 sm:text-lg sm:leading-8">From orchard-fresh almonds to indulgent dates, discover dry fruits selected for exceptional taste, texture, and everyday goodness.</p>
-            <div className="mt-6 flex flex-wrap gap-3 sm:mt-9">
-              <a href="#shop" className="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-4 text-xs font-bold text-primary-foreground shadow-lg shadow-primary/15 transition-transform hover:-translate-y-0.5 sm:h-13 sm:gap-3 sm:px-7 sm:text-sm">Shop collection <ArrowRight size={17} /></a>
-              <a href="#gifting" className="inline-flex h-11 items-center gap-2 rounded-md border border-accent px-4 text-xs font-bold text-primary transition-colors hover:bg-secondary sm:h-13 sm:gap-3 sm:px-7 sm:text-sm">Explore gifting <Gift size={17} /></a>
-            </div>
-            <div className="mt-6 hidden flex-wrap gap-x-6 gap-y-3 text-xs font-semibold text-muted-foreground sm:flex lg:mt-10"><span className="flex items-center gap-2"><Check size={15} className="text-accent" /> Quality checked</span><span className="flex items-center gap-2"><Check size={15} className="text-accent" /> Hygienically packed</span><span className="flex items-center gap-2"><Check size={15} className="text-accent" /> Pan-India delivery</span></div>
-          </div>
-          <div className="relative h-[260px] sm:h-[430px] lg:h-[620px]">
-            <div className="absolute inset-0 overflow-hidden rounded-md border border-border/70 bg-secondary">
-              <img src={heroImage} alt="A premium spread of almonds, pistachios, cashews, walnuts and dates" className="h-full w-full object-cover" width={1536} height={1152} />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary/70 to-transparent p-7 pt-24 text-primary-foreground sm:p-9">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">The signature selection</p>
-                <div className="mt-2 flex items-end justify-between gap-4"><h2 className="font-display text-2xl font-semibold sm:text-3xl">Five favourites. One beautiful ritual.</h2><a href="#shop" aria-label="Shop signature selection" className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground sm:flex"><ArrowRight size={19} /></a></div>
-              </div>
-            </div>
-            <div className="absolute -bottom-4 left-4 flex items-center gap-3 rounded-md border border-border bg-card p-3 pr-5 shadow-xl sm:-left-5 sm:bottom-8"><span className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-primary"><Sparkles size={18} /></span><div><p className="text-xs font-bold text-primary">Freshly packed</p><p className="text-[11px] text-muted-foreground">in small, careful batches</p></div></div>
-          </div>
-        </section>
-
-        <section className="bg-primary py-6 text-primary-foreground">
-          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-5 px-5 lg:grid-cols-4">
-            {[{icon:Leaf,title:"Responsibly sourced",sub:"Selected at origin"},{icon:ShieldCheck,title:"Purity guaranteed",sub:"Quality checked"},{icon:Truck,title:"Swift delivery",sub:"Packed to stay fresh"},{icon:Gift,title:"Made for gifting",sub:"Beautifully presented"}].map(({icon:Icon,title,sub}) => <div key={title} className="flex items-center gap-3 lg:justify-center"><Icon size={21} className="shrink-0 text-accent" strokeWidth={1.6}/><div><p className="text-xs font-bold sm:text-sm">{title}</p><p className="text-[10px] text-primary-foreground/65 sm:text-xs">{sub}</p></div></div>)}
-          </div>
-        </section>
-
-        <section id="categories" className="mx-auto max-w-[1360px] px-5 py-20 lg:px-10 lg:py-28">
-          <div className="mb-9 flex items-end justify-between"><div><p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-accent">Find your favourite</p><h2 className="font-display text-3xl font-semibold text-primary sm:text-4xl">Shop by craving</h2></div><a href="#shop" className="hidden items-center gap-2 text-sm font-bold text-primary sm:flex">View all <ChevronRight size={17}/></a></div>
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
-            {categories.map((item) => <a href="#shop" key={item.name} className="group relative aspect-[4/5] overflow-hidden rounded-md bg-secondary"><img src={collectionImage} alt={item.name} loading="lazy" width={1536} height={1024} className={`h-full w-full scale-[1.7] object-cover ${item.crop} transition-transform duration-500 group-hover:scale-[1.78]`} /><div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/5 to-transparent"/><div className="absolute inset-x-0 bottom-0 p-4 text-primary-foreground sm:p-6"><p className="font-display text-xl font-semibold sm:text-2xl">{item.name}</p><p className="mt-1 text-xs text-primary-foreground/75">{item.note}</p></div></a>)}
-          </div>
-        </section>
-
-        <section id="shop" className="bg-card py-20 lg:py-28">
-          <div className="mx-auto max-w-[1360px] px-5 lg:px-10">
-            <div className="mb-10 text-center"><p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-accent">Loved by everyone</p><h2 className="font-display text-3xl font-semibold text-primary sm:text-4xl">Our bestselling picks</h2><p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted-foreground">Wholesome pantry staples and naturally indulgent treats, packed fresh for your table.</p></div>
-            <div className="grid grid-cols-2 gap-x-3 gap-y-8 lg:grid-cols-4 lg:gap-5">
-              {products.map((product) => <article key={product.name} className="group"><div className="relative aspect-square overflow-hidden rounded-md bg-secondary"><Link to="/products/$slug" params={{ slug: product.slug }} aria-label={`View ${product.name}`}><img src={collectionImage} alt={product.name} loading="lazy" width={1536} height={1024} className={`h-full w-full scale-[1.55] object-cover ${product.crop} transition-transform duration-500 group-hover:scale-[1.62]`} /></Link><span className="absolute left-3 top-3 rounded-sm bg-card/95 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.08em] text-primary sm:text-[10px]">{product.badge}</span><Button variant="secondary" size="icon-sm" aria-label={`Add ${product.name} to wishlist`} className="absolute right-3 top-3 rounded-full"><Heart size={15}/></Button></div><div className="pt-4"><p className="text-xs text-muted-foreground">{product.detail}</p><Link to="/products/$slug" params={{ slug: product.slug }}><h3 className="mt-1 font-display text-sm font-semibold text-primary sm:text-base">{product.name}</h3></Link><div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><p className="font-bold text-primary">₹{product.price} <span className="ml-1 text-xs font-normal text-muted-foreground line-through">₹{product.oldPrice}</span></p><Button variant="outline" size="sm" onClick={() => addItem(product.slug, product.sizes[0].label)}><Plus size={14}/> Add</Button></div></div></article>)}
-            </div>
-          </div>
-        </section>
-
-        <section id="gifting" className="mx-auto max-w-[1360px] px-5 py-20 lg:px-10 lg:py-28">
-          <div className="grid overflow-hidden rounded-md bg-secondary lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="relative min-h-[370px] lg:min-h-[520px]"><img src={heroImage} alt="Premium dry fruit gift selection" loading="lazy" width={1536} height={1152} className="absolute inset-0 h-full w-full object-cover object-center"/><div className="absolute inset-0 bg-primary/10"/></div>
-            <div className="flex flex-col justify-center p-8 sm:p-12 lg:p-16"><p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-accent">Gifts with good taste</p><h2 className="font-display text-3xl font-semibold leading-tight text-primary sm:text-4xl">A thoughtful box for every celebration.</h2><p className="mt-5 max-w-md text-sm leading-7 text-muted-foreground">Curated dry-fruit assortments dressed in elegant packaging—perfect for festivals, weddings, corporate gifting, and warm everyday gestures.</p><div className="mt-8 flex items-center gap-6"><a href="#shop" className="inline-flex h-12 items-center gap-2 rounded-md bg-primary px-6 text-sm font-bold text-primary-foreground">Discover gift boxes <ArrowRight size={16}/></a><span className="hidden text-sm font-semibold text-primary sm:block">From ₹799</span></div></div>
-          </div>
-        </section>
-
-        <section className="border-y border-border bg-secondary py-14"><div className="mx-auto flex max-w-3xl flex-col items-center px-5 text-center"><span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground"><Leaf size={20}/></span><h2 className="mt-5 font-display text-2xl font-semibold text-primary sm:text-3xl">Goodness, delivered to your inbox.</h2><p className="mt-2 text-sm text-muted-foreground">New harvests, mindful snacking ideas, and first access to festive collections.</p><form onSubmit={(e) => e.preventDefault()} className="mt-6 flex w-full max-w-lg gap-2"><input aria-label="Email address" type="email" required placeholder="Your email address" className="h-12 min-w-0 flex-1 rounded-md border border-border bg-card px-4 text-sm outline-none"/><button className="h-12 rounded-md bg-primary px-5 text-sm font-bold text-primary-foreground">Subscribe</button></form></div></section>
-      </main>
-
-      <footer className="bg-primary px-5 py-12 text-primary-foreground"><div className="mx-auto flex max-w-[1360px] flex-col items-center justify-between gap-7 border-b border-primary-foreground/15 pb-9 text-center md:flex-row md:text-left"><img src={logo.url} alt="ASM Delights" className="h-20 w-36 rounded-sm bg-secondary object-contain p-1" width="144" height="80"/><p className="max-w-sm text-sm leading-6 text-primary-foreground/65">Premium dry fruits selected with care, packed for freshness, and made for everyday delight.</p><div className="flex gap-6 text-sm font-semibold"><a href="#shop">Shop</a><a href="#gifting">Gifting</a><a href="mailto:care@asmdelights.com">Contact</a></div></div><div className="mx-auto flex max-w-[1360px] flex-col items-center justify-between gap-3 pt-7 text-xs text-primary-foreground/55 sm:flex-row"><p>© 2026 ASM Delights. All rights reserved.</p><p>Crafted for better snacking.</p></div></footer>
-    </div>
-  );
+function HomePage() {
+  return <StoreShell>
+    <section className="relative min-h-[430px] overflow-hidden sm:min-h-[500px] lg:min-h-[570px]"><img src={heroImage} alt="ASM Delights premium dry fruits in maroon and gold packaging" width={1920} height={840} className="absolute inset-0 h-full w-full object-cover object-[66%_center]"/><div className="absolute inset-0 bg-hero-overlay"/><div className="relative mx-auto flex min-h-[430px] max-w-[1440px] items-center px-5 py-14 sm:min-h-[500px] lg:min-h-[570px] lg:px-10"><div className="max-w-xl"><p className="text-xs font-extrabold uppercase text-accent-foreground">A premium everyday ritual</p><h1 className="mt-3 font-display text-4xl font-bold leading-tight text-primary sm:text-5xl lg:text-6xl">Goodness you can see. Quality you can taste.</h1><p className="mt-5 max-w-lg text-sm leading-7 text-foreground/75 sm:text-base">Handpicked dry fruits, nuts and nourishing mixes—freshly packed and made for better snacking.</p><div className="mt-7 flex flex-wrap gap-3"><Button asChild size="lg"><Link to="/shop">Shop now <ArrowRight/></Link></Button><Button asChild variant="outline" size="lg"><Link to="/gifting">Explore gifting</Link></Button></div></div></div></section>
+    <section className="border-b border-border bg-card"><div className="mx-auto grid max-w-[1440px] grid-cols-2 gap-px bg-border lg:grid-cols-4">{[[ShieldCheck,"Purity checked","Carefully selected"],[PackageCheck,"Freshly packed","Small, careful batches"],[Truck,"Pan-India delivery","Free above ₹999"],[BadgeCheck,"Premium quality","Satisfaction assured"]].map(([Icon,title,copy]) => { const TrustIcon = Icon as typeof ShieldCheck; return <div key={title as string} className="flex items-center gap-3 bg-card px-4 py-5 sm:justify-center"><TrustIcon size={22} className="shrink-0 text-accent"/><div><p className="text-xs font-extrabold text-foreground sm:text-sm">{title as string}</p><p className="text-[10px] text-muted-foreground sm:text-xs">{copy as string}</p></div></div>; })}</div></section>
+    <section className="mx-auto max-w-[1440px] px-5 py-12 lg:px-10 lg:py-16"><div className="mb-7 flex items-end justify-between"><div><p className="text-xs font-extrabold uppercase text-accent-foreground">Shop your favourites</p><h2 className="mt-2 font-display text-3xl font-bold text-primary">Shop by category</h2></div><Link to="/shop" className="hidden items-center gap-1 text-sm font-bold text-primary sm:flex">View all <ArrowRight size={16}/></Link></div><div className="hide-scrollbar flex gap-4 overflow-x-auto pb-2">{categories.map((category) => <Link key={category.name} to="/collections/$category" params={{ category: category.slug }} className="group min-w-[125px] text-center sm:min-w-[165px]"><div className="aspect-square overflow-hidden rounded-full border border-border bg-secondary"><img src={categoryImage} alt={category.name} loading="lazy" width={1800} height={1200} className={`h-full w-full scale-[3.5] object-cover ${category.pos} transition-transform duration-500 group-hover:scale-[3.65]`}/></div><p className="mt-3 text-sm font-bold text-foreground">{category.name}</p></Link>)}</div></section>
+    <section className="bg-muted py-12 lg:py-16"><div className="mx-auto max-w-[1440px] px-5 lg:px-10"><div className="mb-8 text-center"><p className="text-xs font-extrabold uppercase text-accent-foreground">Customers keep coming back</p><h2 className="mt-2 font-display text-3xl font-bold text-primary">Our bestsellers</h2></div><div className="grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-3 lg:grid-cols-4 lg:gap-5">{products.slice(0,8).map((product) => <ProductCard key={product.slug} product={product}/>)}</div><div className="mt-10 text-center"><Button asChild variant="outline" size="lg"><Link to="/shop">View all products <ArrowRight/></Link></Button></div></div></section>
+    <section className="mx-auto max-w-[1440px] px-5 py-12 lg:px-10 lg:py-16"><div className="grid overflow-hidden rounded-md bg-secondary lg:grid-cols-2"><div className="min-h-[320px]"><img src={giftImage} alt="ASM Delights premium dry fruit gift box" loading="lazy" width={1600} height={1000} className="h-full w-full object-cover"/></div><div className="flex flex-col justify-center p-8 sm:p-12 lg:p-16"><p className="text-xs font-extrabold uppercase text-accent-foreground">Celebrate with good taste</p><h2 className="mt-3 font-display text-3xl font-bold leading-tight text-primary sm:text-4xl">Gifts that feel as special as the occasion.</h2><p className="mt-4 max-w-lg text-sm leading-7 text-muted-foreground">Premium assortments in elegant maroon and gold boxes for festivals, weddings, teams and thoughtful everyday moments.</p><ul className="mt-5 grid gap-2 text-sm font-semibold text-foreground sm:grid-cols-2"><li className="flex gap-2"><Gift size={17} className="text-accent"/>Custom gift notes</li><li className="flex gap-2"><Gift size={17} className="text-accent"/>Corporate orders</li></ul><Button asChild className="mt-7 w-fit" size="lg"><Link to="/gifting">Explore gift boxes <ArrowRight/></Link></Button></div></div></section>
+    <section className="border-y border-border bg-primary py-14 text-primary-foreground"><div className="mx-auto max-w-5xl px-5 text-center"><Leaf className="mx-auto text-accent"/><h2 className="mt-4 font-display text-3xl font-bold">Better snacking begins with better ingredients.</h2><p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-primary-foreground/75">We select for taste, texture and purity, then pack in small batches so every pouch reaches you at its best.</p><Button asChild variant="secondary" className="mt-7"><Link to="/about">Our story <ArrowRight/></Link></Button></div></section>
+    <section className="mx-auto max-w-[1440px] px-5 py-12 lg:px-10 lg:py-16"><div className="mb-8 text-center"><p className="text-xs font-extrabold uppercase text-accent-foreground">Real moments of delight</p><h2 className="mt-2 font-display text-3xl font-bold text-primary">Loved across India</h2></div><div className="grid gap-4 md:grid-cols-3">{[["The almonds are crisp and genuinely fresh. The resealable pack is perfect for our breakfast shelf.","Aarav M.","Mumbai"],["Sent the Royal Gift Box to family for Diwali. It looked elegant and arrived beautifully packed.","Neha R.","Bengaluru"],["My evening snack is sorted. The trail mix feels balanced, not overly sweet.","Ritika S.","Delhi"]].map(([quote,name,city]) => <figure key={name} className="rounded-md border border-border bg-card p-6"><div className="flex gap-1 text-rating">{[1,2,3,4,5].map(i=><Star key={i} size={15} fill="currentColor"/>)}</div><blockquote className="mt-4 text-sm leading-7 text-foreground">“{quote}”</blockquote><figcaption className="mt-5 text-xs font-bold text-primary">{name} <span className="font-medium text-muted-foreground">• {city}</span></figcaption></figure>)}</div></section>
+    <section className="border-t border-border bg-secondary py-12"><div className="mx-auto max-w-2xl px-5 text-center"><h2 className="font-display text-3xl font-bold text-primary">A little delight in your inbox</h2><p className="mt-2 text-sm text-muted-foreground">Fresh launches, festive collections and members-only offers.</p><form onSubmit={(event) => event.preventDefault()} className="mx-auto mt-6 flex max-w-lg gap-2"><input required type="email" aria-label="Email address" placeholder="Enter your email address" className="h-11 min-w-0 flex-1 rounded-md border border-input bg-card px-4 text-sm outline-none focus:ring-1 focus:ring-ring"/><Button type="submit" className="h-11">Subscribe</Button></form></div></section>
+  </StoreShell>;
 }
