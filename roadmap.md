@@ -11,4 +11,4 @@
 - [x] Add AI product and recipe recommendations
 - [x] Rebuild the storefront around product-first shopping
 - [x] Add shop, collection, gifting, brand, support, and policy pages
-- [ ] Verify desktop and mobile flows
+- [x] Verify desktop and mobile flows
