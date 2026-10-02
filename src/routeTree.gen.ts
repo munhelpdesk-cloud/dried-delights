@@ -13,8 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as GiftingRouteImport } from './routes/gifting'
+import { Route as ShopRouteImport } from './routes/shop'
 import { Route as TrackOrderRouteImport } from './routes/track-order'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as CollectionsCategoryRouteImport } from './routes/collections.$category'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -37,6 +40,16 @@ const CheckoutRoute = CheckoutRouteImport.update({
   path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GiftingRoute = GiftingRouteImport.update({
+  id: '/gifting',
+  path: '/gifting',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShopRoute = ShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrackOrderRoute = TrackOrderRouteImport.update({
   id: '/track-order',
   path: '/track-order',
@@ -45,6 +58,11 @@ const TrackOrderRoute = TrackOrderRouteImport.update({
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionsCategoryRoute = CollectionsCategoryRouteImport.update({
+  id: '/collections/$category',
+  path: '/collections/$category',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsSlugRoute = ProductsSlugRouteImport.update({
@@ -58,8 +76,11 @@ export interface FileRoutesByFullPath {
   '/assistant': typeof AssistantRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/gifting': typeof GiftingRoute
+  '/shop': typeof ShopRoute
   '/track-order': typeof TrackOrderRoute
   '/api/chat': typeof ApiChatRoute
+  '/collections/$category': typeof CollectionsCategoryRoute
   '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRoutesByTo {
@@ -67,8 +88,11 @@ export interface FileRoutesByTo {
   '/assistant': typeof AssistantRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/gifting': typeof GiftingRoute
+  '/shop': typeof ShopRoute
   '/track-order': typeof TrackOrderRoute
   '/api/chat': typeof ApiChatRoute
+  '/collections/$category': typeof CollectionsCategoryRoute
   '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRoutesById {
@@ -77,8 +101,11 @@ export interface FileRoutesById {
   '/assistant': typeof AssistantRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/gifting': typeof GiftingRoute
+  '/shop': typeof ShopRoute
   '/track-order': typeof TrackOrderRoute
   '/api/chat': typeof ApiChatRoute
+  '/collections/$category': typeof CollectionsCategoryRoute
   '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRouteTypes {
@@ -88,8 +115,11 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/cart'
     | '/checkout'
+    | '/gifting'
+    | '/shop'
     | '/track-order'
     | '/api/chat'
+    | '/collections/$category'
     | '/products/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -97,8 +127,11 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/cart'
     | '/checkout'
+    | '/gifting'
+    | '/shop'
     | '/track-order'
     | '/api/chat'
+    | '/collections/$category'
     | '/products/$slug'
   id:
     | '__root__'
@@ -106,8 +139,11 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/cart'
     | '/checkout'
+    | '/gifting'
+    | '/shop'
     | '/track-order'
     | '/api/chat'
+    | '/collections/$category'
     | '/products/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -116,8 +152,11 @@ export interface RootRouteChildren {
   AssistantRoute: typeof AssistantRoute
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
+  GiftingRoute: typeof GiftingRoute
+  ShopRoute: typeof ShopRoute
   TrackOrderRoute: typeof TrackOrderRoute
   ApiChatRoute: typeof ApiChatRoute
+  CollectionsCategoryRoute: typeof CollectionsCategoryRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
 }
 
@@ -151,6 +190,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gifting': {
+      id: '/gifting'
+      path: '/gifting'
+      fullPath: '/gifting'
+      preLoaderRoute: typeof GiftingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shop': {
+      id: '/shop'
+      path: '/shop'
+      fullPath: '/shop'
+      preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/track-order': {
       id: '/track-order'
       path: '/track-order'
@@ -163,6 +216,13 @@ declare module '@tanstack/react-router' {
       path: '/api/chat'
       fullPath: '/api/chat'
       preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections/$category': {
+      id: '/collections/$category'
+      path: '/collections/$category'
+      fullPath: '/collections/$category'
+      preLoaderRoute: typeof CollectionsCategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/$slug': {
@@ -180,8 +240,11 @@ const rootRouteChildren: RootRouteChildren = {
   AssistantRoute: AssistantRoute,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
+  GiftingRoute: GiftingRoute,
+  ShopRoute: ShopRoute,
   TrackOrderRoute: TrackOrderRoute,
   ApiChatRoute: ApiChatRoute,
+  CollectionsCategoryRoute: CollectionsCategoryRoute,
   ProductsSlugRoute: ProductsSlugRoute,
 }
 export const routeTree = rootRouteImport
