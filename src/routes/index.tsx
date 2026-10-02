@@ -45,10 +45,9 @@ function HomePage() {
           <div className="gold-rule mx-auto mt-4 h-px w-20" />
         </div>
         <div className="relative lg:grid lg:grid-cols-12 lg:items-center">
-          <div className="relative col-span-9 overflow-hidden rounded-tr-[72px] lg:rounded-tr-[140px]">
+          <div className="relative col-span-9 row-start-1 overflow-hidden rounded-tr-[72px] lg:rounded-tr-[140px]">
             <img src={heroImage} alt="ASM Delights premium dry fruits in maroon and gold packaging" width={1920} height={840} className="h-[460px] w-full object-cover object-[67%_center] sm:h-[560px] lg:h-[650px]" />
             <div className="absolute inset-0 bg-hero-overlay" />
-            <p className="absolute left-6 top-8 max-w-[12rem] font-display text-3xl italic leading-none text-primary-foreground sm:left-10 sm:top-12 sm:max-w-sm sm:text-5xl lg:hidden">The art of thoughtful indulgence.</p>
           </div>
           <div className="relative z-10 -mt-16 ml-auto w-[88%] border-l border-t border-accent/50 bg-background p-6 sm:w-[68%] sm:p-9 lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:mt-0 lg:w-full lg:p-12 xl:p-16">
             <p className="editorial-kicker">The signature collection</p>
