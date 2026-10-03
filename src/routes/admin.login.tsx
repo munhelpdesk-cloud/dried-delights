@@ -1,0 +1,25 @@
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState, type FormEvent } from "react";
+import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail, ShieldCheck } from "lucide-react";
+import logo from "@/assets/asm-delights-logo.jpg.asset.json";
+import packaging from "@/assets/asm-packaging-lineup.jpg";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useAdmin } from "@/lib/admin-store";
+
+export const Route = createFileRoute("/admin/login")({
+  head: () => ({ meta: [{ title: "Admin Sign In — ASM Delights" }, { name: "description", content: "Sign in to the ASM Delights demo administration workspace." }, { property: "og:title", content: "Admin Sign In — ASM Delights" }, { property: "og:description", content: "ASM Delights administration workspace." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
+  component: AdminLogin,
+});
+function AdminLogin() {
+  const { signIn, signedIn, hydrated } = useAdmin(); const navigate = useNavigate();
+  const [email, setEmail] = useState("admin@asmdelights.com"); const [password, setPassword] = useState("admin123"); const [show, setShow] = useState(false); const [error, setError] = useState("");
+  useEffect(() => { if (hydrated && signedIn) void navigate({ to: "/admin/dashboard", replace: true }); }, [hydrated, signedIn, navigate]);
+  const submit = (event: FormEvent) => { event.preventDefault(); if (!email.includes("@") || password.length < 6) { setError("Enter a valid email and a password with at least 6 characters."); return; } signIn(email); void navigate({ to: "/admin/dashboard", replace: true }); };
+  return <div className="grid min-h-screen bg-background lg:grid-cols-[1.05fr_.95fr]">
+    <section className="relative hidden overflow-hidden bg-primary lg:block"><img src={packaging} alt="ASM Delights premium dry fruit collection" className="absolute inset-0 h-full w-full object-cover opacity-40"/><div className="absolute inset-0 bg-primary/75"/><div className="relative flex h-full flex-col justify-between p-14 text-primary-foreground"><img src={logo.url} alt="ASM Delights" className="h-24 w-40 object-contain"/><div className="max-w-lg"><span className="mb-5 inline-flex items-center gap-2 border border-accent/40 bg-primary/40 px-3 py-2 text-xs font-bold text-accent"><ShieldCheck size={16}/>PRIVATE ADMIN WORKSPACE</span><h1 className="font-display text-5xl font-bold leading-tight">Every order, product and insight. One elegant workspace.</h1><p className="mt-5 text-base leading-7 text-primary-foreground/75">Manage the ASM Delights store with clarity, speed and complete operational visibility.</p></div><p className="text-xs text-primary-foreground/50">© 2026 ASM Delights. Internal use only.</p></div></section>
+    <section className="flex items-center justify-center px-5 py-10 sm:px-10"><div className="w-full max-w-md"><img src={logo.url} alt="ASM Delights" className="mx-auto mb-7 h-20 w-32 object-contain lg:hidden"/><p className="text-xs font-bold uppercase text-primary">Store administration</p><h2 className="mt-2 font-display text-3xl font-bold">Welcome back</h2><p className="mt-2 text-sm text-muted-foreground">Sign in to continue to your command centre.</p><form onSubmit={submit} className="mt-8 space-y-5"><div className="space-y-2"><Label htmlFor="admin-email">Email address</Label><div className="relative"><Mail className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"/><Input id="admin-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="h-11 pl-10"/></div></div><div className="space-y-2"><div className="flex justify-between"><Label htmlFor="admin-password">Password</Label><button type="button" className="text-xs font-semibold text-primary" onClick={() => setPassword("admin123")}>Forgot password?</button></div><div className="relative"><LockKeyhole className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"/><Input id="admin-password" type={show ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} className="h-11 px-10"/><Button type="button" variant="ghost" size="icon-sm" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={() => setShow((value) => !value)} aria-label={show ? "Hide password" : "Show password"}>{show ? <EyeOff/> : <Eye/>}</Button></div></div><div className="flex items-center gap-2"><Checkbox id="remember" defaultChecked/><Label htmlFor="remember" className="text-xs font-normal">Keep me signed in on this device</Label></div>{error && <p className="text-sm text-destructive">{error}</p>}<Button type="submit" className="h-11 w-full">Sign in to dashboard <ArrowRight/></Button></form><div className="mt-6 rounded-md border bg-muted/50 p-4 text-xs leading-5 text-muted-foreground"><strong className="text-foreground">Demo access:</strong> Use any valid email and any password with at least 6 characters. No real account is created.</div></div></section>
+  </div>;
+}
