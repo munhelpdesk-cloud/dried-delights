@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronDown, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
 import { useState } from "react";
-import logo from "@/assets/asm-delights-logo.jpg.asset.json";
+import logo from "@/assets/asm-delights-logo.jpg";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart";
 
