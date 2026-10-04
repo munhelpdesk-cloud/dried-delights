@@ -10,7 +10,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
-const navigation = [
+const navigation: ReadonlyArray<{
+  label: string;
+  to: "/admin/dashboard" | "/admin/products" | "/admin/orders" | "/admin/transactions" | "/admin/customers" | "/admin/reports" | "/admin/profile";
+  icon: React.ComponentType<{ size?: number }>;
+  badge?: string;
+}> = [
   { label: "Overview", to: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Products", to: "/admin/products", icon: Boxes },
   { label: "Orders", to: "/admin/orders", icon: ShoppingCart, badge: "4" },
@@ -18,7 +23,7 @@ const navigation = [
   { label: "Customers", to: "/admin/customers", icon: UsersRound },
   { label: "Reports", to: "/admin/reports", icon: BarChart3 },
   { label: "Profile & settings", to: "/admin/profile", icon: Settings },
-] as const;
+];
 
 function AdminNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
