@@ -7,6 +7,7 @@ import {
   HeadContent,
   Scripts,
   type ErrorComponentProps,
+  useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -14,6 +15,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "@/lib/cart";
 import { ChatWidget } from "@/components/chat-widget";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -121,13 +123,15 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const isAdmin = useRouterState({ select: (state) => state.location.pathname.startsWith("/admin") });
 
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
-        <ChatWidget />
+        {!isAdmin && <ChatWidget />}
+        <Toaster position="top-right" richColors />
       </CartProvider>
     </QueryClientProvider>
   );
